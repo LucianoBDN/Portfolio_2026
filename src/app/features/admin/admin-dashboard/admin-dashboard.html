@@ -1,0 +1,14 @@
+<span class="section-eyebrow">Dashboard</span>
+<h1>Hola, Luciano 👋</h1>
+<p>Desde acá podés editar todo el contenido del portfolio sin tocar código.</p>
+
+<div class="stats">
+  <a class="stat-card" routerLink="/admin/messages">
+    <span class="stat-value">{{ unreadMessages() }}</span>
+    <span class="stat-label">Mensajes sin leer</span>
+  </a>
+  <a class="stat-card" routerLink="/admin/projects">
+    <span class="stat-value">{{ totalProjects() }}</span>
+    <span class="stat-label">Proyectos publicados</span>
+  </a>
+</div>

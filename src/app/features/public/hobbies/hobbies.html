@@ -1,0 +1,13 @@
+<section id="hobbies" class="section" appRevealOnScroll>
+  <span class="section-eyebrow">06 — Fuera del código</span>
+  <h2>Hobbies</h2>
+
+  <div class="hobby-grid">
+    @for (hobby of hobbies; track hobby.id) {
+      <div class="hobby-card">
+        <span class="hobby-emoji">{{ hobby.emoji }}</span>
+        <span class="hobby-label">{{ hobby.label }}</span>
+      </div>
+    }
+  </div>
+</section>

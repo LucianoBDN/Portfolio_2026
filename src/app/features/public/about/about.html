@@ -1,0 +1,20 @@
+<section id="about" class="section" appRevealOnScroll>
+  <span class="section-eyebrow">01 — Sobre mí</span>
+  <h2>Quién soy</h2>
+
+  <p class="about-text">{{ profile.about_text }}</p>
+
+  @if (quickFacts.length) {
+    <div class="quick-facts">
+      @for (fact of quickFacts; track fact.label) {
+        <div class="fact-card">
+          <span class="fact-icon">{{ fact.icon }}</span>
+          <div>
+            <span class="fact-label">{{ fact.label }}</span>
+            <span class="fact-value">{{ fact.value }}</span>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</section>

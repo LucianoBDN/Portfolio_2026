@@ -1,0 +1,59 @@
+<span class="section-eyebrow">Trabajo</span>
+<h1>Proyectos</h1>
+
+<form class="inline-form form-grid" [formGroup]="form" (ngSubmit)="submit()">
+  <input type="text" formControlName="title" placeholder="Título" />
+  <textarea rows="2" formControlName="description" placeholder="Descripción"></textarea>
+  <input type="text" formControlName="tech_tags" placeholder="Tecnologías separadas por coma (Java, Spring Boot, PostgreSQL)" />
+  <input type="url" formControlName="github_url" placeholder="URL de GitHub" />
+  <input type="url" formControlName="demo_url" placeholder="URL de demo" />
+  <select formControlName="status">
+    @for (status of statuses; track status) {
+      <option [value]="status">{{ status }}</option>
+    }
+  </select>
+  <input type="number" formControlName="sort_order" placeholder="Orden" />
+  <label class="checkbox"><input type="checkbox" formControlName="featured" /> Destacado</label>
+
+  <div class="image-field">
+    @if (imageUrl()) {
+      <img class="preview" [src]="imageUrl()" alt="Preview" />
+    }
+    <input type="file" accept="image/*" (change)="onImageSelected($event)" [disabled]="uploadingImage()" />
+    @if (uploadingImage()) {
+      <span class="hint">Comprimiendo a WebP...</span>
+    }
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">{{ editingId() ? 'Actualizar' : 'Agregar' }}</button>
+    @if (editingId()) {
+      <button type="button" class="btn btn-outline" (click)="cancelEdit()">Cancelar</button>
+    }
+  </div>
+</form>
+
+@if (loading()) {
+  <p>Cargando...</p>
+} @else {
+  <table>
+    <thead>
+      <tr><th>Título</th><th>Estado</th><th>Destacado</th><th></th></tr>
+    </thead>
+    <tbody>
+      @for (project of projects(); track project.id) {
+        <tr>
+          <td>{{ project.title }}</td>
+          <td>{{ project.status }}</td>
+          <td>{{ project.featured ? 'Sí' : 'No' }}</td>
+          <td class="actions">
+            <button type="button" (click)="edit(project)">Editar</button>
+            <button type="button" class="danger" (click)="remove(project)">Eliminar</button>
+          </td>
+        </tr>
+      } @empty {
+        <tr><td colspan="4">Todavía no hay proyectos cargados.</td></tr>
+      }
+    </tbody>
+  </table>
+}

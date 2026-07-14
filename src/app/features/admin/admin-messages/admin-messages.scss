@@ -1,0 +1,43 @@
+@use '../admin-shared' as *;
+
+.message-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.message-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: var(--space-2);
+}
+
+.message-card.unread {
+  border-color: var(--accent);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+header a {
+  color: var(--text-secondary);
+  margin-left: 8px;
+}
+
+.date {
+  color: var(--text-secondary);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.message-card p {
+  font-size: 14px;
+  margin-bottom: 8px;
+}

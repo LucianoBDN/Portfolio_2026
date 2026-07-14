@@ -1,0 +1,29 @@
+<span class="section-eyebrow">Bandeja</span>
+<h1>Mensajes de contacto</h1>
+
+@if (loading()) {
+  <p>Cargando...</p>
+} @else {
+  <div class="message-list">
+    @for (message of messages(); track message.id) {
+      <article class="message-card" [class.unread]="!message.is_read">
+        <header>
+          <div>
+            <strong>{{ message.name }}</strong>
+            <a [href]="'mailto:' + message.email">{{ message.email }}</a>
+          </div>
+          <span class="date">{{ message.created_at | date: 'dd/MM/yyyy HH:mm' }}</span>
+        </header>
+        <p>{{ message.message }}</p>
+        <div class="actions">
+          <button type="button" (click)="toggleRead(message)">
+            {{ message.is_read ? 'Marcar no leído' : 'Marcar leído' }}
+          </button>
+          <button type="button" class="danger" (click)="remove(message.id)">Eliminar</button>
+        </div>
+      </article>
+    } @empty {
+      <p>Todavía no recibiste mensajes.</p>
+    }
+  </div>
+}

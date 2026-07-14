@@ -1,0 +1,46 @@
+<span class="section-eyebrow">Trayectoria</span>
+<h1>Experiencia</h1>
+
+<form class="inline-form form-grid" [formGroup]="form" (ngSubmit)="submit()">
+  <input type="text" formControlName="title" placeholder="Puesto (ej. Backend Developer)" />
+  <input type="text" formControlName="company" placeholder="Empresa / Proyecto" />
+  <div class="dates">
+    <label>Inicio<input type="date" formControlName="start_date" /></label>
+    <label>Fin (vacío = actual)<input type="date" formControlName="end_date" /></label>
+  </div>
+  <textarea rows="2" formControlName="description" placeholder="Descripción breve"></textarea>
+  <input type="text" formControlName="technologies" placeholder="Tecnologías separadas por coma" />
+  <input type="number" formControlName="sort_order" placeholder="Orden" />
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">{{ editingId() ? 'Actualizar' : 'Agregar' }}</button>
+    @if (editingId()) {
+      <button type="button" class="btn btn-outline" (click)="cancelEdit()">Cancelar</button>
+    }
+  </div>
+</form>
+
+@if (loading()) {
+  <p>Cargando...</p>
+} @else {
+  <table>
+    <thead>
+      <tr><th>Puesto</th><th>Empresa</th><th>Período</th><th></th></tr>
+    </thead>
+    <tbody>
+      @for (item of experience(); track item.id) {
+        <tr>
+          <td>{{ item.title }}</td>
+          <td>{{ item.company }}</td>
+          <td>{{ item.start_date }} — {{ item.end_date || 'Actual' }}</td>
+          <td class="actions">
+            <button type="button" (click)="edit(item)">Editar</button>
+            <button type="button" class="danger" (click)="remove(item.id)">Eliminar</button>
+          </td>
+        </tr>
+      } @empty {
+        <tr><td colspan="4">Todavía no hay experiencia cargada.</td></tr>
+      }
+    </tbody>
+  </table>
+}

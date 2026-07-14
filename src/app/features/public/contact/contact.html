@@ -1,0 +1,51 @@
+<section id="contact" class="section" appRevealOnScroll>
+  <span class="section-eyebrow">07 — Hablemos</span>
+  <h2>Contacto</h2>
+
+  <div class="contact-layout">
+    <form class="contact-form" [formGroup]="form" (ngSubmit)="submit()">
+      <label>
+        Nombre
+        <input type="text" formControlName="name" placeholder="Tu nombre" />
+      </label>
+      <label>
+        Email
+        <input type="email" formControlName="email" placeholder="tu@email.com" />
+      </label>
+      <label>
+        Mensaje
+        <textarea rows="5" formControlName="message" placeholder="Contame en qué puedo ayudarte"></textarea>
+      </label>
+
+      <button type="submit" class="btn btn-primary" [disabled]="state() === 'sending'">
+        @if (state() === 'sending') {
+          Enviando...
+        } @else {
+          Enviar
+        }
+      </button>
+
+      @if (state() === 'success') {
+        <p class="feedback success">¡Mensaje enviado! Te voy a responder a la brevedad.</p>
+      }
+      @if (state() === 'error') {
+        <p class="feedback error">Ocurrió un error al enviar. Probá de nuevo en unos minutos.</p>
+      }
+    </form>
+
+    <div class="contact-info">
+      @if (profile.github_url) {
+        <a [href]="profile.github_url" target="_blank" rel="noopener">GitHub</a>
+      }
+      @if (profile.linkedin_url) {
+        <a [href]="profile.linkedin_url" target="_blank" rel="noopener">LinkedIn</a>
+      }
+      @if (profile.email) {
+        <a [href]="'mailto:' + profile.email">{{ profile.email }}</a>
+      }
+      @if (profile.location) {
+        <span>{{ profile.location }}</span>
+      }
+    </div>
+  </div>
+</section>

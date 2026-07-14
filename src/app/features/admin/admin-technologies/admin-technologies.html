@@ -1,0 +1,44 @@
+<span class="section-eyebrow">Stack</span>
+<h1>Tecnologías</h1>
+<p class="hint">El "icon_slug" usa <a href="https://simpleicons.org/" target="_blank" rel="noopener">simpleicons.org</a> (ej. "spring", "java", "postgresql").</p>
+
+<form class="inline-form" [formGroup]="form" (ngSubmit)="submit()">
+  <select formControlName="category">
+    @for (category of categories; track category) {
+      <option [value]="category">{{ category }}</option>
+    }
+  </select>
+  <input type="text" formControlName="name" placeholder="Nombre (ej. Spring Boot)" />
+  <input type="text" formControlName="icon_slug" placeholder="icon_slug (ej. spring)" />
+  <input type="number" formControlName="sort_order" placeholder="Orden" />
+  <button type="submit" class="btn btn-primary">{{ editingId() ? 'Actualizar' : 'Agregar' }}</button>
+  @if (editingId()) {
+    <button type="button" class="btn btn-outline" (click)="cancelEdit()">Cancelar</button>
+  }
+</form>
+
+@if (loading()) {
+  <p>Cargando...</p>
+} @else {
+  <table>
+    <thead>
+      <tr><th>Categoría</th><th>Nombre</th><th>Icono</th><th>Orden</th><th></th></tr>
+    </thead>
+    <tbody>
+      @for (tech of technologies(); track tech.id) {
+        <tr>
+          <td>{{ tech.category }}</td>
+          <td>{{ tech.name }}</td>
+          <td>{{ tech.icon_slug }}</td>
+          <td>{{ tech.sort_order }}</td>
+          <td class="actions">
+            <button type="button" (click)="edit(tech)">Editar</button>
+            <button type="button" class="danger" (click)="remove(tech.id)">Eliminar</button>
+          </td>
+        </tr>
+      } @empty {
+        <tr><td colspan="5">Todavía no hay tecnologías cargadas.</td></tr>
+      }
+    </tbody>
+  </table>
+}

@@ -1,0 +1,31 @@
+@if (loading()) {
+  <div class="state-screen">Cargando portfolio...</div>
+} @else if (error()) {
+  <div class="state-screen">No se pudo cargar el contenido. Probá recargar la página.</div>
+} @else {
+  <app-sidebar [profile]="profile" />
+
+  <main class="main-content">
+    <app-hero [profile]="profile" />
+    <app-about [profile]="profile" />
+    <app-technologies [technologies]="technologies" />
+    <app-projects [projects]="projects" />
+    <app-experience [experience]="experience" />
+    <app-education [items]="educationCertificates" />
+    <app-hobbies [hobbies]="hobbies" />
+    <app-contact [profile]="profile" />
+
+    <footer class="site-footer">
+      <div class="footer-socials">
+        @if (profile.github_url) {
+          <a [href]="profile.github_url" target="_blank" rel="noopener">GitHub</a>
+        }
+        @if (profile.linkedin_url) {
+          <a [href]="profile.linkedin_url" target="_blank" rel="noopener">LinkedIn</a>
+        }
+      </div>
+      <span>© {{ currentYear }} {{ profile.full_name }}</span>
+      
+    </footer>
+  </main>
+}

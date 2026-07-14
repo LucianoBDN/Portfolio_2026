@@ -1,0 +1,25 @@
+<div class="admin-layout">
+  <aside class="admin-nav">
+    <span class="section-eyebrow">Panel</span>
+    <h2>Administración</h2>
+
+    <nav>
+      @for (item of navItems; track item.path) {
+        <a
+          [routerLink]="item.path"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
+        >
+          {{ item.label }}
+        </a>
+      }
+    </nav>
+
+    <a class="view-site" routerLink="/">Ver sitio público ↗</a>
+    <button type="button" class="btn btn-outline" (click)="logout()">Cerrar sesión</button>
+  </aside>
+
+  <main class="admin-content">
+    <router-outlet />
+  </main>
+</div>

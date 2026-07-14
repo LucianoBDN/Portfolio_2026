@@ -1,0 +1,73 @@
+.admin-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+.admin-nav {
+  background: var(--sidebar);
+  border-right: 1px solid var(--border);
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.admin-nav h2 {
+  font-size: 18px;
+  margin-bottom: var(--space-2);
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+nav a {
+  padding: 8px 12px;
+  border-radius: var(--radius-control);
+  font-size: 14px;
+  color: var(--text-secondary);
+  border-left: 2px solid transparent;
+  transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease;
+}
+
+nav a:hover {
+  color: var(--text-primary);
+}
+
+nav a.active {
+  color: var(--text-primary);
+  background: rgba(59, 130, 246, 0.08);
+  border-left-color: var(--accent);
+}
+
+.view-site {
+  margin-top: auto;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.view-site:hover {
+  color: var(--accent);
+}
+
+.admin-content {
+  padding: var(--space-4);
+  max-width: 900px;
+}
+
+@media (max-width: 900px) {
+  .admin-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-nav {
+    position: static;
+    height: auto;
+  }
+}

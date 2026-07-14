@@ -1,0 +1,57 @@
+<span class="section-eyebrow">Formación</span>
+<h1>Estudios y Certificados</h1>
+
+<form class="inline-form form-grid" [formGroup]="form" (ngSubmit)="submit()">
+  <select formControlName="type">
+    @for (type of types; track type) {
+      <option [value]="type">{{ type }}</option>
+    }
+  </select>
+  <input type="text" formControlName="title" placeholder="Título (ej. Técnico en Programación)" />
+  <input type="text" formControlName="institution" placeholder="Institución" />
+  <input type="date" formControlName="date" />
+  <input type="number" formControlName="sort_order" placeholder="Orden" />
+
+  <div class="file-field">
+    @if (certificateUrl()) {
+      <a class="hint" [href]="certificateUrl()" target="_blank" rel="noopener">Ver archivo actual ↗</a>
+    }
+    <input type="file" accept="application/pdf" (change)="onFileSelected($event)" [disabled]="uploadingFile()" />
+    @if (uploadingFile()) {
+      <span class="hint">Subiendo...</span>
+    }
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">{{ editingId() ? 'Actualizar' : 'Agregar' }}</button>
+    @if (editingId()) {
+      <button type="button" class="btn btn-outline" (click)="cancelEdit()">Cancelar</button>
+    }
+  </div>
+</form>
+
+@if (loading()) {
+  <p>Cargando...</p>
+} @else {
+  <table>
+    <thead>
+      <tr><th>Tipo</th><th>Título</th><th>Institución</th><th>Fecha</th><th></th></tr>
+    </thead>
+    <tbody>
+      @for (item of items(); track item.id) {
+        <tr>
+          <td>{{ item.type }}</td>
+          <td>{{ item.title }}</td>
+          <td>{{ item.institution }}</td>
+          <td>{{ item.date }}</td>
+          <td class="actions">
+            <button type="button" (click)="edit(item)">Editar</button>
+            <button type="button" class="danger" (click)="remove(item)">Eliminar</button>
+          </td>
+        </tr>
+      } @empty {
+        <tr><td colspan="5">Todavía no hay estudios o certificados cargados.</td></tr>
+      }
+    </tbody>
+  </table>
+}

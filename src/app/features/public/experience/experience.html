@@ -1,0 +1,29 @@
+<section id="experience" class="section" appRevealOnScroll>
+  <span class="section-eyebrow">04 — Trayectoria</span>
+  <h2>Experiencia</h2>
+
+  <div class="timeline">
+    @for (item of experience; track item.id) {
+      <div class="timeline-item">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <span class="date">{{ formatRange(item) }}</span>
+          <h3>{{ item.title }}</h3>
+          <span class="company">{{ item.company }}</span>
+          @if (item.description) {
+            <p>{{ item.description }}</p>
+          }
+          @if (item.technologies.length) {
+            <div class="tech-tags">
+              @for (tag of item.technologies; track tag) {
+                <span class="tag">{{ tag }}</span>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    } @empty {
+      <p>Todavía no hay experiencia cargada.</p>
+    }
+  </div>
+</section>

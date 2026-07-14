@@ -1,0 +1,25 @@
+<div class="login-screen">
+  <form class="login-card" [formGroup]="form" (ngSubmit)="submit()">
+    <span class="section-eyebrow">Admin</span>
+    <h1>Iniciar sesión</h1>
+
+    <label>
+      Email
+      <input type="email" formControlName="email" placeholder="tu@email.com" />
+    </label>
+    <label>
+      Contraseña
+      <input type="password" formControlName="password" placeholder="••••••••" />
+    </label>
+
+    @if (errorMessage()) {
+      <p class="error">{{ errorMessage() }}</p>
+    }
+
+    <button type="submit" class="btn btn-primary" [disabled]="loading()">
+      @if (loading()) { Ingresando... } @else { Ingresar }
+    </button>
+
+    <a class="back-link" routerLink="/">← Volver al sitio</a>
+  </form>
+</div>
