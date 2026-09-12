@@ -1,16 +1,42 @@
-<span class="section-eyebrow">Trayectoria</span>
-<h1>Experiencia</h1>
+<div class="page-header">
+  <h1>Experiencia</h1>
+  <p class="hint">Timeline de trabajos y proyectos freelance.</p>
+</div>
 
 <form class="inline-form form-grid" [formGroup]="form" (ngSubmit)="submit()">
-  <input type="text" formControlName="title" placeholder="Puesto (ej. Backend Developer)" />
-  <input type="text" formControlName="company" placeholder="Empresa / Proyecto" />
-  <div class="dates">
-    <label>Inicio<input type="date" formControlName="start_date" /></label>
-    <label>Fin (vacío = actual)<input type="date" formControlName="end_date" /></label>
+  <div class="field-grid cols-2">
+    <label class="field">
+      Puesto
+      <input type="text" formControlName="title" placeholder="Backend Developer" />
+    </label>
+    <label class="field">
+      Empresa / Proyecto
+      <input type="text" formControlName="company" placeholder="Nombre de la empresa" />
+    </label>
+    <label class="field">
+      Inicio
+      <input type="date" formControlName="start_date" />
+    </label>
+    <label class="field">
+      Fin (vacío = actual)
+      <input type="date" formControlName="end_date" />
+    </label>
   </div>
-  <textarea rows="2" formControlName="description" placeholder="Descripción breve"></textarea>
-  <input type="text" formControlName="technologies" placeholder="Tecnologías separadas por coma" />
-  <input type="number" formControlName="sort_order" placeholder="Orden" />
+
+  <label class="field">
+    Descripción
+    <textarea rows="2" formControlName="description" placeholder="Descripción breve del rol"></textarea>
+  </label>
+  <div class="field-grid cols-2">
+    <label class="field">
+      Tecnologías
+      <input type="text" formControlName="technologies" placeholder="Java, Spring Boot, PostgreSQL" />
+    </label>
+    <label class="field">
+      Orden
+      <input type="number" formControlName="sort_order" placeholder="0" />
+    </label>
+  </div>
 
   <div class="form-actions">
     <button type="submit" class="btn btn-primary">{{ editingId() ? 'Actualizar' : 'Agregar' }}</button>
@@ -23,24 +49,26 @@
 @if (loading()) {
   <p>Cargando...</p>
 } @else {
-  <table>
-    <thead>
-      <tr><th>Puesto</th><th>Empresa</th><th>Período</th><th></th></tr>
-    </thead>
-    <tbody>
-      @for (item of experience(); track item.id) {
-        <tr>
-          <td>{{ item.title }}</td>
-          <td>{{ item.company }}</td>
-          <td>{{ item.start_date }} — {{ item.end_date || 'Actual' }}</td>
-          <td class="actions">
-            <button type="button" (click)="edit(item)">Editar</button>
-            <button type="button" class="danger" (click)="remove(item.id)">Eliminar</button>
-          </td>
-        </tr>
-      } @empty {
-        <tr><td colspan="4">Todavía no hay experiencia cargada.</td></tr>
-      }
-    </tbody>
-  </table>
+  <div class="list-card">
+    <table>
+      <thead>
+        <tr><th>Puesto</th><th>Empresa</th><th>Período</th><th></th></tr>
+      </thead>
+      <tbody>
+        @for (item of experience(); track item.id) {
+          <tr>
+            <td>{{ item.title }}</td>
+            <td>{{ item.company }}</td>
+            <td>{{ item.start_date }} - {{ item.end_date || 'Actual' }}</td>
+            <td class="actions">
+              <button type="button" (click)="edit(item)"><i class="ph-bold ph-pencil-simple"></i> Editar</button>
+              <button type="button" class="danger" (click)="remove(item.id)"><i class="ph-bold ph-trash"></i> Eliminar</button>
+            </td>
+          </tr>
+        } @empty {
+          <tr><td colspan="4" class="empty-row">Todavía no hay experiencia cargada.</td></tr>
+        }
+      </tbody>
+    </table>
+  </div>
 }

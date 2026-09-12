@@ -1,11 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { EducationCertificate } from '../../../core/models/portfolio.models';
-import { RevealOnScrollDirective } from '../../../shared/directives/reveal-on-scroll.directive';
 
 @Component({
   selector: 'app-education',
   standalone: true,
-  imports: [RevealOnScrollDirective],
+  imports: [],
   templateUrl: './education.html',
   styleUrl: './education.scss',
 })

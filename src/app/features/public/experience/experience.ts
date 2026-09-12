@@ -1,11 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { Experience as ExperienceEntry } from '../../../core/models/portfolio.models';
-import { RevealOnScrollDirective } from '../../../shared/directives/reveal-on-scroll.directive';
 
 @Component({
   selector: 'app-experience',
   standalone: true,
-  imports: [RevealOnScrollDirective],
+  imports: [],
   templateUrl: './experience.html',
   styleUrl: './experience.scss',
 })
@@ -15,7 +14,7 @@ export class Experience {
   formatRange(item: ExperienceEntry): string {
     const start = this.formatDate(item.start_date);
     const end = item.end_date ? this.formatDate(item.end_date) : 'Actualidad';
-    return `${start} — ${end}`;
+    return `${start} - ${end}`;
   }
 
   private formatDate(value: string): string {

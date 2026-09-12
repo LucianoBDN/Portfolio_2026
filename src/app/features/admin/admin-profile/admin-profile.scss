@@ -1,12 +1,8 @@
-h1 {
-  font-size: 22px;
-  margin: 8px 0 var(--space-3);
-}
+@use '../admin-shared' as *;
 
 .upload-row {
   display: flex;
   gap: var(--space-4);
-  margin-bottom: var(--space-4);
 }
 
 .upload-field {
@@ -32,73 +28,31 @@ h1 {
 }
 
 fieldset {
-  border: 1px solid var(--border);
-  border-radius: var(--radius-card);
-  padding: var(--space-3);
+  border: none;
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: var(--space-3);
 }
 
 legend {
-  padding: 0 8px;
-  font-size: 13px;
+  padding: 0 0 var(--space-2);
+  font-size: 15px;
   font-weight: 600;
-  color: var(--accent);
-}
-
-label {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  font-size: 13px;
-  color: var(--text-secondary);
-}
-
-input,
-textarea {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-control);
-  padding: 10px 12px;
   color: var(--text-primary);
-  font-family: inherit;
-  font-size: 14px;
-}
-
-input:focus,
-textarea:focus {
-  outline: none;
-  border-color: var(--accent);
-}
-
-.hint {
-  font-size: 12px;
-  color: var(--text-secondary);
-}
-
-.hint.success {
-  color: #4ade80;
-  margin-left: 12px;
 }
 
 .hero-customization {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: var(--space-3);
   padding-top: var(--space-2);
   border-top: 1px dashed var(--border);
 }
 
 .color-field {
-  display: flex;
-  gap: var(--space-3);
-}
-
-.color-field label {
-  flex-direction: row;
+  flex-direction: row !important;
   align-items: center;
-  gap: 10px;
+  gap: 10px !important;
 }
 
 input[type='color'] {
@@ -115,6 +69,7 @@ input[type='color'] {
   object-fit: cover;
   border-radius: var(--radius-control);
   border: 1px solid var(--border);
+  margin-bottom: 8px;
 }
 
 .hero-bg-actions {
@@ -122,4 +77,10 @@ input[type='color'] {
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
+}
+
+.hint.success {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }

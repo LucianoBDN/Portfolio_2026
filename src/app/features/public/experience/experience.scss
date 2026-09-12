@@ -1,6 +1,25 @@
+.page-header {
+  margin-bottom: var(--space-3);
+}
+
+.page-header h1 {
+  font-size: 30px;
+  margin-bottom: 6px;
+}
+
+.page-header p {
+  font-size: 15px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: var(--space-4);
+}
+
 .timeline {
   position: relative;
-  margin-top: var(--space-4);
   padding-left: var(--space-4);
   border-left: 1px solid var(--border);
   display: flex;
@@ -19,12 +38,12 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 4px var(--bg);
+  background: var(--accent-gradient);
+  box-shadow: 0 0 0 4px var(--card), 0 0 10px var(--accent-glow);
 }
 
 .date {
-  font-family: monospace;
+  font-family: var(--font-mono);
   font-size: 13px;
   color: var(--text-secondary);
 }

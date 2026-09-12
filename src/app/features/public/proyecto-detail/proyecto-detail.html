@@ -1,0 +1,173 @@
+@if (loading()) {
+  <div class="skel-hero"></div>
+} @else if (notFound()) {
+  <div class="not-found">
+    <p>No encontré ese proyecto.</p>
+    <a class="btn btn-outline" routerLink="/proyectos">Volver a proyectos</a>
+  </div>
+} @else if (project(); as p) {
+  <section class="hero card">
+    @if (p.image_url) {
+      <img class="hero-image" [src]="p.image_url" [alt]="p.title" loading="lazy" />
+    }
+
+    <div class="hero-info">
+      <span
+        class="category-badge"
+        [style.color]="'var(' + categoryColor(p.category) + ')'"
+        [style.background]="'color-mix(in srgb, var(' + categoryColor(p.category) + ') 16%, transparent)'"
+      >{{ p.category }}</span>
+      <h1>{{ p.title }}</h1>
+      <p class="description">{{ p.description }}</p>
+
+      @if (p.tech_tags.length) {
+        <div class="tag-row">
+          @for (tag of p.tech_tags; track tag) {
+            <span class="tag">{{ tag }}</span>
+          }
+        </div>
+      }
+
+      <div class="hero-actions">
+        @if (p.demo_url) {
+          <a class="btn btn-primary" [href]="p.demo_url" target="_blank" rel="noopener">
+            Abrir demo
+            <i class="ph-bold ph-arrow-square-out"></i>
+          </a>
+        }
+        @if (p.github_url) {
+          <a class="btn btn-outline" [href]="p.github_url" target="_blank" rel="noopener">
+            <app-brand-icon icon="github" [size]="14" />
+            Ver código
+          </a>
+        }
+        <a class="back-link" routerLink="/proyectos">
+          <i class="ph ph-arrow-left"></i>
+          Volver a proyectos
+        </a>
+      </div>
+    </div>
+  </section>
+
+  @if (p.context || p.objective || p.participation || p.tech_tags.length) {
+    <section class="meta-grid">
+      @if (p.context) {
+        <div class="meta-card">
+          <i class="ph-bold ph-file-text"></i>
+          <div>
+            <span class="meta-label">Contexto</span>
+            <p>{{ p.context }}</p>
+          </div>
+        </div>
+      }
+      @if (p.objective) {
+        <div class="meta-card">
+          <i class="ph-bold ph-target"></i>
+          <div>
+            <span class="meta-label">Objetivo</span>
+            <p>{{ p.objective }}</p>
+          </div>
+        </div>
+      }
+      @if (p.participation) {
+        <div class="meta-card">
+          <i class="ph-bold ph-user-focus"></i>
+          <div>
+            <span class="meta-label">Mi participación</span>
+            <p>{{ p.participation }}</p>
+          </div>
+        </div>
+      }
+      @if (p.tech_tags.length) {
+        <div class="meta-card">
+          <i class="ph-bold ph-wrench"></i>
+          <div>
+            <span class="meta-label">Herramientas</span>
+            <p>{{ p.tech_tags.join(' · ') }}</p>
+          </div>
+        </div>
+      }
+    </section>
+  }
+
+  @if (p.problem || p.process || p.solution) {
+    <section class="card">
+      <h2>Del problema a la solución</h2>
+      <div class="steps">
+        @if (p.problem) {
+          <div class="step">
+            <span class="step-index">01 · Problema</span>
+            <p>{{ p.problem }}</p>
+          </div>
+        }
+        @if (p.problem && p.process) {
+          <i class="ph-bold ph-arrow-right step-arrow"></i>
+        }
+        @if (p.process) {
+          <div class="step">
+            <span class="step-index">02 · Proceso</span>
+            <p>{{ p.process }}</p>
+          </div>
+        }
+        @if (p.process && p.solution) {
+          <i class="ph-bold ph-arrow-right step-arrow"></i>
+        }
+        @if (p.solution) {
+          <div class="step">
+            <span class="step-index">03 · Solución</span>
+            <p>{{ p.solution }}</p>
+          </div>
+        }
+      </div>
+    </section>
+  }
+
+  @if (p.analysis_points.length || p.detection_points.length) {
+    <section class="points-grid">
+      @if (p.analysis_points.length) {
+        <div class="card">
+          <h2>Qué permite hacer</h2>
+          <ul class="points-list">
+            @for (point of p.analysis_points; track point) {
+              <li><i class="ph-bold ph-check"></i> {{ point }}</li>
+            }
+          </ul>
+        </div>
+      }
+      @if (p.detection_points.length) {
+        <div class="card">
+          <h2>Qué resuelve</h2>
+          <ul class="points-list">
+            @for (point of p.detection_points; track point) {
+              <li><i class="ph-bold ph-check"></i> {{ point }}</li>
+            }
+          </ul>
+        </div>
+      }
+    </section>
+  }
+
+  @if (related().length) {
+    <section class="card">
+      <h2>Proyectos relacionados</h2>
+      <div class="related-list">
+        @for (item of related(); track item.id) {
+          <a class="related-item" [routerLink]="['/proyectos', item.slug]">
+            @if (item.image_url) {
+              <img [src]="item.image_url" [alt]="item.title" loading="lazy" />
+            } @else {
+              <div class="related-thumb-placeholder"><i class="ph ph-image"></i></div>
+            }
+            <div>
+              <strong>{{ item.title }}</strong>
+              <span>
+                Ver caso de estudio
+                <i class="ph-bold ph-arrow-right"></i>
+              </span>
+            </div>
+          </a>
+        }
+      </div>
+    </section>
+  }
+}

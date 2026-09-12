@@ -1,5 +1,7 @@
-<span class="section-eyebrow">Bandeja</span>
-<h1>Mensajes de contacto</h1>
+<div class="page-header">
+  <h1>Mensajes de contacto</h1>
+  <p class="hint">Lo que llega desde el formulario público.</p>
+</div>
 
 @if (loading()) {
   <p>Cargando...</p>
@@ -9,6 +11,9 @@
       <article class="message-card" [class.unread]="!message.is_read">
         <header>
           <div>
+            @if (!message.is_read) {
+              <span class="unread-dot"></span>
+            }
             <strong>{{ message.name }}</strong>
             <a [href]="'mailto:' + message.email">{{ message.email }}</a>
           </div>
@@ -17,13 +22,19 @@
         <p>{{ message.message }}</p>
         <div class="actions">
           <button type="button" (click)="toggleRead(message)">
+            <i class="ph-bold" [class.ph-envelope-open]="!message.is_read" [class.ph-envelope-simple]="message.is_read"></i>
             {{ message.is_read ? 'Marcar no leído' : 'Marcar leído' }}
           </button>
-          <button type="button" class="danger" (click)="remove(message.id)">Eliminar</button>
+          <button type="button" class="danger" (click)="remove(message.id)">
+            <i class="ph-bold ph-trash"></i> Eliminar
+          </button>
         </div>
       </article>
     } @empty {
-      <p>Todavía no recibiste mensajes.</p>
+      <div class="card empty-state">
+        <i class="ph ph-envelope-simple"></i>
+        <p>Todavía no recibiste mensajes.</p>
+      </div>
     }
   </div>
 }

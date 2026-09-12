@@ -1,14 +1,32 @@
-<span class="section-eyebrow">Dashboard</span>
-<h1>Hola, Luciano 👋</h1>
-<p>Desde acá podés editar todo el contenido del portfolio sin tocar código.</p>
+<div class="page-header">
+  <h1>Hola, Luciano 👋</h1>
+  <p>Desde acá podés editar todo el contenido del portfolio sin tocar código.</p>
+</div>
 
 <div class="stats">
   <a class="stat-card" routerLink="/admin/messages">
+    <span class="stat-icon"><i class="ph-bold ph-envelope-simple"></i></span>
     <span class="stat-value">{{ unreadMessages() }}</span>
     <span class="stat-label">Mensajes sin leer</span>
   </a>
   <a class="stat-card" routerLink="/admin/projects">
+    <span class="stat-icon"><i class="ph-bold ph-folder"></i></span>
     <span class="stat-value">{{ totalProjects() }}</span>
     <span class="stat-label">Proyectos publicados</span>
+  </a>
+  <a class="stat-card" routerLink="/admin/experience">
+    <span class="stat-icon"><i class="ph-bold ph-briefcase"></i></span>
+    <span class="stat-value">{{ totalExperience() }}</span>
+    <span class="stat-label">Experiencias cargadas</span>
+  </a>
+  <a class="stat-card" routerLink="/admin/education">
+    <span class="stat-icon"><i class="ph-bold ph-seal-check"></i></span>
+    <span class="stat-value">{{ totalEducation() }}</span>
+    <span class="stat-label">Estudios y certificados</span>
+  </a>
+  <a class="stat-card" routerLink="/admin/technologies">
+    <span class="stat-icon"><i class="ph-bold ph-code"></i></span>
+    <span class="stat-value">{{ totalTechnologies() }}</span>
+    <span class="stat-label">Tecnologías cargadas</span>
   </a>
 </div>

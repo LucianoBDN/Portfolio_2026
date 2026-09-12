@@ -1,6 +1,12 @@
 <div class="admin-layout">
   <aside class="admin-nav">
-    <span class="section-eyebrow">Panel</span>
+    <a class="brand" routerLink="/admin">
+      <img
+        class="brand-mark"
+        [src]="themeService.theme() === 'dark' ? 'assets/bdn-mark-light.svg' : 'assets/bdn-mark-dark.svg'"
+        alt="BDN"
+      />
+    </a>
     <h2>Administración</h2>
 
     <nav>
@@ -16,7 +22,18 @@
     </nav>
 
     <a class="view-site" routerLink="/">Ver sitio público ↗</a>
-    <button type="button" class="btn btn-outline" (click)="logout()">Cerrar sesión</button>
+
+    <div class="admin-nav-footer">
+      <button
+        type="button"
+        class="theme-toggle"
+        (click)="themeService.toggle()"
+        [attr.aria-label]="themeService.theme() === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'"
+      >
+        <i class="ph-bold" [class.ph-sun]="themeService.theme() === 'dark'" [class.ph-moon]="themeService.theme() === 'light'"></i>
+      </button>
+      <button type="button" class="btn btn-outline" (click)="logout()">Cerrar sesión</button>
+    </div>
   </aside>
 
   <main class="admin-content">

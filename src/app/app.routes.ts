@@ -4,7 +4,46 @@ import { adminGuard } from './core/guards/admin.guard';
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./features/public/home/home').then((m) => m.Home),
+    loadComponent: () => import('./layout/app-shell/app-shell').then((m) => m.AppShell),
+    children: [
+      { path: '', redirectTo: 'resumen', pathMatch: 'full' },
+      {
+        path: 'resumen',
+        loadComponent: () =>
+          import('./features/public/resumen/resumen').then((m) => m.Resumen),
+      },
+      {
+        path: 'proyectos',
+        loadComponent: () =>
+          import('./features/public/proyectos-list/proyectos-list').then((m) => m.ProyectosList),
+      },
+      {
+        path: 'proyectos/:slug',
+        loadComponent: () =>
+          import('./features/public/proyecto-detail/proyecto-detail').then(
+            (m) => m.ProyectoDetail,
+          ),
+      },
+      {
+        path: 'experiencia',
+        loadComponent: () =>
+          import('./features/public/experiencia-page/experiencia-page').then(
+            (m) => m.ExperienciaPage,
+          ),
+      },
+      {
+        path: 'certificaciones',
+        loadComponent: () =>
+          import('./features/public/certificaciones-page/certificaciones-page').then(
+            (m) => m.CertificacionesPage,
+          ),
+      },
+      {
+        path: 'contacto',
+        loadComponent: () =>
+          import('./features/public/contacto-page/contacto-page').then((m) => m.ContactoPage),
+      },
+    ],
   },
   {
     path: 'admin/login',

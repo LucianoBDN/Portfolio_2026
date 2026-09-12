@@ -31,6 +31,8 @@
               }
             ],
             "styles": [
+              "node_modules/@phosphor-icons/web/src/regular/style.css",
+              "node_modules/@phosphor-icons/web/src/bold/style.css",
               "src/styles.scss"
             ]
           },

@@ -1,44 +1,81 @@
-<span class="section-eyebrow">Stack</span>
-<h1>Tecnologías</h1>
-<p class="hint">El "icon_slug" usa <a href="https://simpleicons.org/" target="_blank" rel="noopener">simpleicons.org</a> (ej. "spring", "java", "postgresql").</p>
+<div class="page-header">
+  <h1>Tecnologías</h1>
+  <p class="hint">El "icon_slug" usa <a href="https://simpleicons.org/" target="_blank" rel="noopener">simpleicons.org</a> (ej. "spring", "java", "postgresql").</p>
+</div>
 
 <form class="inline-form" [formGroup]="form" (ngSubmit)="submit()">
-  <select formControlName="category">
-    @for (category of categories; track category) {
-      <option [value]="category">{{ category }}</option>
+  <label class="field">
+    Categoría
+    <select formControlName="category">
+      @for (category of categories; track category) {
+        <option [value]="category">{{ categoryLabel(category) }}</option>
+      }
+    </select>
+  </label>
+  <label class="field">
+    Nombre
+    <input type="text" formControlName="name" placeholder="Spring Boot" />
+  </label>
+  <label class="field">
+    Icon slug
+    <input type="text" formControlName="icon_slug" placeholder="spring" />
+  </label>
+  <label class="field">
+    Orden
+    <input type="number" formControlName="sort_order" placeholder="0" />
+  </label>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">{{ editingId() ? 'Actualizar' : 'Agregar' }}</button>
+    @if (editingId()) {
+      <button type="button" class="btn btn-outline" (click)="cancelEdit()">Cancelar</button>
     }
-  </select>
-  <input type="text" formControlName="name" placeholder="Nombre (ej. Spring Boot)" />
-  <input type="text" formControlName="icon_slug" placeholder="icon_slug (ej. spring)" />
-  <input type="number" formControlName="sort_order" placeholder="Orden" />
-  <button type="submit" class="btn btn-primary">{{ editingId() ? 'Actualizar' : 'Agregar' }}</button>
-  @if (editingId()) {
-    <button type="button" class="btn btn-outline" (click)="cancelEdit()">Cancelar</button>
-  }
+  </div>
 </form>
 
 @if (loading()) {
   <p>Cargando...</p>
 } @else {
-  <table>
-    <thead>
-      <tr><th>Categoría</th><th>Nombre</th><th>Icono</th><th>Orden</th><th></th></tr>
-    </thead>
-    <tbody>
-      @for (tech of technologies(); track tech.id) {
-        <tr>
-          <td>{{ tech.category }}</td>
-          <td>{{ tech.name }}</td>
-          <td>{{ tech.icon_slug }}</td>
-          <td>{{ tech.sort_order }}</td>
-          <td class="actions">
-            <button type="button" (click)="edit(tech)">Editar</button>
-            <button type="button" class="danger" (click)="remove(tech.id)">Eliminar</button>
-          </td>
-        </tr>
-      } @empty {
-        <tr><td colspan="5">Todavía no hay tecnologías cargadas.</td></tr>
-      }
-    </tbody>
-  </table>
+  <div class="filter-chips">
+    <button type="button" class="chip" [class.active]="activeFilter() === null" (click)="setFilter(null)">
+      Todas
+      <span class="count">{{ technologies().length }}</span>
+    </button>
+    @for (category of categories; track category) {
+      <button type="button" class="chip" [class.active]="activeFilter() === category" (click)="setFilter(category)">
+        {{ categoryLabel(category) }}
+        <span class="count">{{ countFor(category) }}</span>
+      </button>
+    }
+  </div>
+
+  <div class="list-card">
+    <table>
+      <thead>
+        <tr><th>Categoría</th><th>Nombre</th><th>Icono</th><th>Orden</th><th></th></tr>
+      </thead>
+      <tbody>
+        @for (tech of filteredTechnologies(); track tech.id) {
+          <tr>
+            <td>{{ categoryLabel(tech.category) }}</td>
+            <td>{{ tech.name }}</td>
+            <td>{{ tech.icon_slug }}</td>
+            <td>{{ tech.sort_order }}</td>
+            <td class="actions">
+              <button type="button" (click)="edit(tech)"><i class="ph-bold ph-pencil-simple"></i> Editar</button>
+              <button type="button" class="danger" (click)="remove(tech.id)"><i class="ph-bold ph-trash"></i> Eliminar</button>
+            </td>
+          </tr>
+        } @empty {
+          <tr><td colspan="5" class="empty-row">
+            @if (activeFilter()) {
+              No hay tecnologías en esta categoría.
+            } @else {
+              Todavía no hay tecnologías cargadas.
+            }
+          </td></tr>
+        }
+      </tbody>
+    </table>
+  </div>
 }

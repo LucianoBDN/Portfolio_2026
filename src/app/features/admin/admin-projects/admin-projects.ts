@@ -4,6 +4,24 @@ import { PortfolioDataService } from '../../../core/services/portfolio-data.serv
 import { StorageService } from '../../../core/services/storage.service';
 import { Project, ProjectStatus } from '../../../core/models/portfolio.models';
 
+function slugify(value: string): string {
+  return value
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '') // quita acentos/diacríticos
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
+}
+
+function linesToArray(value: string): string[] {
+  return value
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean);
+}
+
 @Component({
   selector: 'app-admin-projects',
   standalone: true,
@@ -19,11 +37,14 @@ export class AdminProjects implements OnInit {
   readonly uploadingImage = signal(false);
   readonly imageUrl = signal<string | null>(null);
   private originalImageUrl: string | null = null;
+  private slugTouched = false;
 
   private readonly fb = inject(FormBuilder);
 
   readonly form = this.fb.nonNullable.group({
     title: ['', Validators.required],
+    slug: ['', Validators.required],
+    category: ['Proyecto', Validators.required],
     description: ['', Validators.required],
     tech_tags: [''],
     github_url: [''],
@@ -31,6 +52,14 @@ export class AdminProjects implements OnInit {
     status: ['in_progress' as ProjectStatus],
     sort_order: [0],
     featured: [false],
+    context: [''],
+    objective: [''],
+    participation: [''],
+    problem: [''],
+    process: [''],
+    solution: [''],
+    analysis_points: [''],
+    detection_points: [''],
   });
 
   constructor(
@@ -47,12 +76,24 @@ export class AdminProjects implements OnInit {
     this.loading.set(false);
   }
 
+  onTitleInput(): void {
+    if (this.slugTouched) return;
+    this.form.patchValue({ slug: slugify(this.form.controls.title.value) }, { emitEvent: false });
+  }
+
+  onSlugInput(): void {
+    this.slugTouched = true;
+  }
+
   edit(project: Project): void {
     this.editingId.set(project.id);
     this.imageUrl.set(project.image_url);
     this.originalImageUrl = project.image_url;
+    this.slugTouched = true;
     this.form.patchValue({
       title: project.title,
+      slug: project.slug,
+      category: project.category,
       description: project.description,
       tech_tags: project.tech_tags.join(', '),
       github_url: project.github_url ?? '',
@@ -60,6 +101,14 @@ export class AdminProjects implements OnInit {
       status: project.status,
       sort_order: project.sort_order,
       featured: project.featured,
+      context: project.context ?? '',
+      objective: project.objective ?? '',
+      participation: project.participation ?? '',
+      problem: project.problem ?? '',
+      process: project.process ?? '',
+      solution: project.solution ?? '',
+      analysis_points: project.analysis_points.join('\n'),
+      detection_points: project.detection_points.join('\n'),
     });
   }
 
@@ -67,7 +116,14 @@ export class AdminProjects implements OnInit {
     this.editingId.set(null);
     this.imageUrl.set(null);
     this.originalImageUrl = null;
-    this.form.reset({ status: 'in_progress', sort_order: 0, featured: false, tech_tags: '' });
+    this.slugTouched = false;
+    this.form.reset({
+      status: 'in_progress',
+      sort_order: 0,
+      featured: false,
+      tech_tags: '',
+      category: 'Proyecto',
+    });
   }
 
   async onImageSelected(event: Event): Promise<void> {
@@ -99,11 +155,20 @@ export class AdminProjects implements OnInit {
     const payload = {
       ...raw,
       id: this.editingId() ?? undefined,
+      slug: slugify(raw.slug),
       image_url: this.imageUrl(),
       tech_tags: raw.tech_tags
         .split(',')
         .map((tag) => tag.trim())
         .filter(Boolean),
+      context: raw.context || null,
+      objective: raw.objective || null,
+      participation: raw.participation || null,
+      problem: raw.problem || null,
+      process: raw.process || null,
+      solution: raw.solution || null,
+      analysis_points: linesToArray(raw.analysis_points),
+      detection_points: linesToArray(raw.detection_points),
     };
 
     await this.portfolioData.upsertProject(payload);

@@ -1,9 +1,37 @@
 .login-screen {
+  position: relative;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: var(--space-3);
+}
+
+.theme-toggle {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-control);
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text-secondary);
+  transition:
+    color 150ms ease,
+    border-color 150ms ease;
+
+  i {
+    font-size: 16px;
+  }
+}
+
+.theme-toggle:hover {
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 .login-card {
@@ -16,6 +44,12 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+}
+
+.brand-mark {
+  height: 26px;
+  width: auto;
+  margin-bottom: var(--space-2);
 }
 
 h1 {

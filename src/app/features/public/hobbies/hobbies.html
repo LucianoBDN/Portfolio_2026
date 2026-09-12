@@ -1,13 +1,13 @@
-<section id="hobbies" class="section" appRevealOnScroll>
-  <span class="section-eyebrow">06 — Fuera del código</span>
-  <h2>Hobbies</h2>
-
-  <div class="hobby-grid">
-    @for (hobby of hobbies; track hobby.id) {
-      <div class="hobby-card">
-        <span class="hobby-emoji">{{ hobby.emoji }}</span>
-        <span class="hobby-label">{{ hobby.label }}</span>
-      </div>
-    }
-  </div>
-</section>
+@if (hobbies.length) {
+  <section class="card">
+    <h2><i class="ph-bold ph-game-controller"></i> Fuera del código</h2>
+    <div class="hobby-grid">
+      @for (hobby of hobbies; track hobby.id; let i = $index) {
+        <div class="hobby-card" [style.background]="'color-mix(in srgb, var(' + colorVar(i) + ') 10%, var(--bg-elevated))'" [style.border-color]="'color-mix(in srgb, var(' + colorVar(i) + ') 35%, var(--border))'">
+          <span class="hobby-emoji">{{ hobby.emoji }}</span>
+          <span class="hobby-label">{{ hobby.label }}</span>
+        </div>
+      }
+    </div>
+  </section>
+}

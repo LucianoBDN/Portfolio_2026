@@ -36,6 +36,7 @@ export type ProjectStatus = 'production' | 'in_progress' | 'archived';
 
 export interface Project {
   id: string;
+  slug: string;
   title: string;
   description: string;
   image_url: string | null;
@@ -47,6 +48,24 @@ export interface Project {
   featured: boolean;
   created_at: string;
   updated_at: string;
+  /** Etiqueta corta para filtrar/agrupar proyectos, ej. "Desarrollo web", "Backend". */
+  category: string;
+  /** Contexto en el que surgió el proyecto. */
+  context: string | null;
+  /** Qué buscaba lograr. */
+  objective: string | null;
+  /** Qué hizo puntualmente en el proyecto. */
+  participation: string | null;
+  /** El problema a resolver, para el bloque "Del problema a la solución". */
+  problem: string | null;
+  /** Cómo lo abordó. */
+  process: string | null;
+  /** En qué terminó / qué se entregó. */
+  solution: string | null;
+  /** Bullets cortos: qué permite hacer o analizar el resultado. */
+  analysis_points: string[];
+  /** Bullets cortos: qué problemas detecta o resuelve. */
+  detection_points: string[];
 }
 
 export interface Experience {
@@ -70,6 +89,8 @@ export interface EducationCertificate {
   institution: string;
   date: string;
   certificate_url: string | null;
+  /** Logo de la institución o imagen del certificado/título. */
+  image_url: string | null;
   sort_order: number;
   created_at: string;
 }

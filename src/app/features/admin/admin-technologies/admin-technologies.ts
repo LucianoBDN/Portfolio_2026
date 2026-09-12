@@ -1,7 +1,14 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PortfolioDataService } from '../../../core/services/portfolio-data.service';
 import { Technology, TechnologyCategory } from '../../../core/models/portfolio.models';
+
+const CATEGORY_LABELS: Record<TechnologyCategory, string> = {
+  backend: 'Backend',
+  frontend: 'Frontend',
+  database: 'Bases de datos',
+  tools: 'Herramientas',
+};
 
 @Component({
   selector: 'app-admin-technologies',
@@ -15,6 +22,13 @@ export class AdminTechnologies implements OnInit {
   readonly technologies = signal<Technology[]>([]);
   readonly loading = signal(true);
   readonly editingId = signal<string | null>(null);
+  readonly activeFilter = signal<TechnologyCategory | null>(null);
+
+  readonly filteredTechnologies = computed(() => {
+    const filter = this.activeFilter();
+    const items = this.technologies();
+    return filter ? items.filter((tech) => tech.category === filter) : items;
+  });
 
   private readonly fb = inject(FormBuilder);
 
@@ -61,5 +75,17 @@ export class AdminTechnologies implements OnInit {
   async remove(id: string): Promise<void> {
     await this.portfolioData.deleteTechnology(id);
     await this.reload();
+  }
+
+  setFilter(category: TechnologyCategory | null): void {
+    this.activeFilter.set(category);
+  }
+
+  categoryLabel(category: TechnologyCategory): string {
+    return CATEGORY_LABELS[category];
+  }
+
+  countFor(category: TechnologyCategory): number {
+    return this.technologies().filter((tech) => tech.category === category).length;
   }
 }

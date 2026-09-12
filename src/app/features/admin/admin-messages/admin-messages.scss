@@ -10,7 +10,9 @@
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius-card);
-  padding: var(--space-2);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-3);
+  transition: border-color 150ms ease;
 }
 
 .message-card.unread {
@@ -26,9 +28,22 @@ header {
   font-size: 13px;
 }
 
+header > div {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.unread-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
 header a {
   color: var(--text-secondary);
-  margin-left: 8px;
 }
 
 .date {
@@ -39,5 +54,20 @@ header a {
 
 .message-card p {
   font-size: 14px;
-  margin-bottom: 8px;
+  margin-bottom: var(--space-2);
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  color: var(--text-secondary);
+  margin-bottom: 0;
+
+  i {
+    font-size: 28px;
+    color: var(--text-tertiary);
+  }
 }

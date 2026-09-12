@@ -17,8 +17,10 @@
     "@angular/forms": "^22.0.0",
     "@angular/platform-browser": "^22.0.0",
     "@angular/router": "^22.0.0",
+    "@phosphor-icons/web": "^2.1.2",
     "@supabase/supabase-js": "^2.110.3",
     "rxjs": "~7.8.0",
+    "simple-icons": "^16.30.0",
     "tslib": "^2.3.0"
   },
   "devDependencies": {

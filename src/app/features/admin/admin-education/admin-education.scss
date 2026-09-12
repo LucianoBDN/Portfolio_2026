@@ -1,17 +1,16 @@
 @use '../admin-shared' as *;
 
-.form-grid {
-  flex-direction: column;
-  align-items: stretch;
-}
-
-.file-field {
+.file-field,
+.image-field {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.form-actions {
-  display: flex;
-  gap: 8px;
+.preview {
+  width: 72px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: var(--radius-control);
+  border: 1px solid var(--border);
 }

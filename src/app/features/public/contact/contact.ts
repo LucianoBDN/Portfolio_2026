@@ -2,14 +2,14 @@ import { Component, Input, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Profile } from '../../../core/models/portfolio.models';
 import { PortfolioDataService } from '../../../core/services/portfolio-data.service';
-import { RevealOnScrollDirective } from '../../../shared/directives/reveal-on-scroll.directive';
+import { BrandIcon } from '../../../shared/brand-icon/brand-icon';
 
 type SubmitState = 'idle' | 'sending' | 'success' | 'error';
 
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [ReactiveFormsModule, RevealOnScrollDirective],
+  imports: [ReactiveFormsModule, BrandIcon],
   templateUrl: './contact.html',
   styleUrl: './contact.scss',
 })

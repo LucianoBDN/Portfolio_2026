@@ -1,26 +1,62 @@
-<span class="section-eyebrow">Formación</span>
-<h1>Estudios y Certificados</h1>
+<div class="page-header">
+  <h1>Estudios y Certificados</h1>
+  <p class="hint">Timeline de formación con logo/imagen opcional y archivo adjunto.</p>
+</div>
 
 <form class="inline-form form-grid" [formGroup]="form" (ngSubmit)="submit()">
-  <select formControlName="type">
-    @for (type of types; track type) {
-      <option [value]="type">{{ type }}</option>
-    }
-  </select>
-  <input type="text" formControlName="title" placeholder="Título (ej. Técnico en Programación)" />
-  <input type="text" formControlName="institution" placeholder="Institución" />
-  <input type="date" formControlName="date" />
-  <input type="number" formControlName="sort_order" placeholder="Orden" />
-
-  <div class="file-field">
-    @if (certificateUrl()) {
-      <a class="hint" [href]="certificateUrl()" target="_blank" rel="noopener">Ver archivo actual ↗</a>
-    }
-    <input type="file" accept="application/pdf" (change)="onFileSelected($event)" [disabled]="uploadingFile()" />
-    @if (uploadingFile()) {
-      <span class="hint">Subiendo...</span>
-    }
+  <div class="field-grid cols-2">
+    <label class="field">
+      Tipo
+      <select formControlName="type">
+        @for (type of types; track type) {
+          <option [value]="type">{{ type }}</option>
+        }
+      </select>
+    </label>
+    <label class="field">
+      Título
+      <input type="text" formControlName="title" placeholder="Técnico en Programación" />
+    </label>
+    <label class="field">
+      Institución
+      <input type="text" formControlName="institution" placeholder="Nombre de la institución" />
+    </label>
+    <label class="field">
+      Fecha
+      <input type="date" formControlName="date" />
+    </label>
   </div>
+
+  <label class="field">
+    Orden
+    <input type="number" formControlName="sort_order" placeholder="0" style="max-width: 140px" />
+  </label>
+
+  <label class="field">
+    Imagen / logo (opcional)
+    <div class="image-field">
+      @if (imageUrl()) {
+        <img class="preview" [src]="imageUrl()" alt="Preview" />
+      }
+      <input type="file" accept="image/*" (change)="onImageSelected($event)" [disabled]="uploadingImage()" />
+      @if (uploadingImage()) {
+        <span class="hint">Comprimiendo a WebP...</span>
+      }
+    </div>
+  </label>
+
+  <label class="field">
+    Certificado (PDF, opcional)
+    <div class="file-field">
+      @if (certificateUrl()) {
+        <a class="hint" [href]="certificateUrl()" target="_blank" rel="noopener">Ver archivo actual ↗</a>
+      }
+      <input type="file" accept="application/pdf" (change)="onFileSelected($event)" [disabled]="uploadingFile()" />
+      @if (uploadingFile()) {
+        <span class="hint">Subiendo...</span>
+      }
+    </div>
+  </label>
 
   <div class="form-actions">
     <button type="submit" class="btn btn-primary">{{ editingId() ? 'Actualizar' : 'Agregar' }}</button>
@@ -33,25 +69,27 @@
 @if (loading()) {
   <p>Cargando...</p>
 } @else {
-  <table>
-    <thead>
-      <tr><th>Tipo</th><th>Título</th><th>Institución</th><th>Fecha</th><th></th></tr>
-    </thead>
-    <tbody>
-      @for (item of items(); track item.id) {
-        <tr>
-          <td>{{ item.type }}</td>
-          <td>{{ item.title }}</td>
-          <td>{{ item.institution }}</td>
-          <td>{{ item.date }}</td>
-          <td class="actions">
-            <button type="button" (click)="edit(item)">Editar</button>
-            <button type="button" class="danger" (click)="remove(item)">Eliminar</button>
-          </td>
-        </tr>
-      } @empty {
-        <tr><td colspan="5">Todavía no hay estudios o certificados cargados.</td></tr>
-      }
-    </tbody>
-  </table>
+  <div class="list-card">
+    <table>
+      <thead>
+        <tr><th>Tipo</th><th>Título</th><th>Institución</th><th>Fecha</th><th></th></tr>
+      </thead>
+      <tbody>
+        @for (item of items(); track item.id) {
+          <tr>
+            <td>{{ item.type }}</td>
+            <td>{{ item.title }}</td>
+            <td>{{ item.institution }}</td>
+            <td>{{ item.date }}</td>
+            <td class="actions">
+              <button type="button" (click)="edit(item)"><i class="ph-bold ph-pencil-simple"></i> Editar</button>
+              <button type="button" class="danger" (click)="remove(item)"><i class="ph-bold ph-trash"></i> Eliminar</button>
+            </td>
+          </tr>
+        } @empty {
+          <tr><td colspan="5" class="empty-row">Todavía no hay estudios o certificados cargados.</td></tr>
+        }
+      </tbody>
+    </table>
+  </div>
 }

@@ -1,0 +1,152 @@
+@if (loading()) {
+  <div class="skeleton-grid">
+    <div class="skel skel-intro"></div>
+    <div class="skel skel-card"></div>
+  </div>
+} @else if (profile(); as p) {
+  <div class="top-row">
+    <section class="intro-card">
+      <span class="eyebrow">{{ p.hero_greeting }}</span>
+      <h1>{{ p.hero_role }}</h1>
+      <p class="subtitle">{{ p.hero_subtitle }}</p>
+
+      <div class="actions">
+        <a class="btn btn-primary" routerLink="/proyectos">
+          Ver proyectos
+          <i class="ph-bold ph-arrow-right"></i>
+        </a>
+        <a class="btn btn-outline" routerLink="/contacto">
+          Contactarme
+          <i class="ph ph-envelope-simple"></i>
+        </a>
+      </div>
+    </section>
+
+    <aside class="identity-card">
+      @if (p.avatar_url) {
+        <img class="identity-avatar" [src]="p.avatar_url" [alt]="p.full_name" />
+      } @else {
+        <div class="identity-avatar avatar-placeholder">{{ p.full_name.charAt(0) }}</div>
+      }
+      <strong class="identity-name">{{ p.full_name }}</strong>
+      <span class="identity-role">{{ p.role_title }}</span>
+
+      <div class="identity-links">
+        @if (p.linkedin_url) {
+          <a [href]="p.linkedin_url" target="_blank" rel="noopener">
+            <i class="ph-bold ph-linkedin-logo"></i>
+            LinkedIn
+          </a>
+        }
+        @if (p.github_url) {
+          <a [href]="p.github_url" target="_blank" rel="noopener">
+            <app-brand-icon icon="github" [size]="16" />
+            GitHub
+          </a>
+        }
+      </div>
+    </aside>
+  </div>
+
+  <div class="card content-card">
+    @if (p.about_text || quickFacts.length) {
+      <section class="block">
+        @if (p.about_text) {
+          <p class="about-text">{{ p.about_text }}</p>
+        }
+        @if (quickFacts.length) {
+          <div class="quick-facts">
+            @for (fact of quickFacts; track fact.label) {
+              <div class="fact">
+                <i class="ph" [class]="fact.icon"></i>
+                <div>
+                  <span class="fact-label">{{ fact.label }}</span>
+                  <span class="fact-value">{{ fact.value }}</span>
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </section>
+    }
+
+    @if (workAreas.length) {
+      <section class="block">
+        <h2><i class="ph-bold ph-squares-four"></i> Áreas de trabajo</h2>
+        <div class="areas-grid">
+          @for (area of workAreas; track area.category) {
+            <div class="area">
+              <span class="area-title">
+                <span class="area-icon" [style.color]="'var(' + area.colorVar + ')'" [style.background]="'color-mix(in srgb, var(' + area.colorVar + ') 16%, transparent)'">
+                  <i class="ph" [class]="area.icon"></i>
+                </span>
+                {{ area.label }}
+              </span>
+              <div class="area-items">
+                @for (tech of area.visible; track tech.id) {
+                  <span class="area-item">
+                    <img [src]="'https://cdn.simpleicons.org/' + tech.icon_slug" [alt]="tech.name" loading="lazy" />
+                    {{ tech.name }}
+                  </span>
+                }
+                @if (area.overflowCount > 0) {
+                  <span class="area-item overflow">+{{ area.overflowCount }}</span>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </section>
+    }
+
+    @if (featuredProject; as fp) {
+      <section class="block">
+        <h2><i class="ph-bold ph-star"></i> Proyecto destacado</h2>
+        <div class="featured-body">
+          @if (fp.image_url) {
+            <img class="featured-image" [src]="fp.image_url" [alt]="fp.title" loading="lazy" />
+          }
+          <div class="featured-info">
+            <h3>{{ fp.title }}</h3>
+            <p>{{ fp.description }}</p>
+            @if (fp.tech_tags.length) {
+              <div class="tag-row">
+                @for (tag of fp.tech_tags.slice(0, 4); track tag) {
+                  <span class="tag">{{ tag }}</span>
+                }
+              </div>
+            }
+            <a class="case-link" [routerLink]="['/proyectos', fp.slug]">
+              Ver caso de estudio
+              <i class="ph-bold ph-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </section>
+    }
+
+    @if (recentProjects.length) {
+      <section class="block">
+        <h2><i class="ph-bold ph-folder-open"></i> Proyectos recientes</h2>
+        <div class="recent-list">
+          @for (project of recentProjects; track project.id) {
+            <a class="recent-item" [routerLink]="['/proyectos', project.slug]">
+              @if (project.image_url) {
+                <img [src]="project.image_url" [alt]="project.title" loading="lazy" />
+              } @else {
+                <div class="recent-thumb-placeholder"><i class="ph ph-image"></i></div>
+              }
+              <div class="recent-info">
+                <strong>{{ project.title }}</strong>
+                <span class="recent-category">{{ project.category }}</span>
+              </div>
+              <i class="ph ph-arrow-right"></i>
+            </a>
+          }
+        </div>
+      </section>
+    }
+  </div>
+
+  <app-hobbies [hobbies]="hobbies()" />
+}

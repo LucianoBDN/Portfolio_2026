@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { ThemeService } from '../../../core/services/theme.service';
 
 @Component({
   selector: 'app-admin-login',
@@ -11,6 +12,7 @@ import { AuthService } from '../../../core/services/auth.service';
   styleUrl: './admin-login.scss',
 })
 export class AdminLogin {
+  readonly themeService = inject(ThemeService);
   readonly loading = signal(false);
   readonly errorMessage = signal<string | null>(null);
 

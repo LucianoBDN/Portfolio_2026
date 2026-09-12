@@ -1,10 +1,12 @@
-<span class="section-eyebrow">Perfil</span>
-<h1>Hero, Sobre mí y datos de contacto</h1>
+<div class="page-header">
+  <h1>Hero, Sobre mí y datos de contacto</h1>
+  <p class="hint">Esto alimenta el Resumen, la tarjeta de identidad y la página de Contacto del sitio público.</p>
+</div>
 
 @if (loading()) {
   <p>Cargando...</p>
 } @else {
-  <div class="upload-row">
+  <div class="card upload-row">
     <div class="upload-field">
       <label>Avatar</label>
       @if (avatarUrl()) {
@@ -29,59 +31,115 @@
   </div>
 
   <form class="profile-form" [formGroup]="form" (ngSubmit)="save()">
-    <fieldset>
+    <fieldset class="card">
       <legend>Hero</legend>
-      <label>Nombre completo<input type="text" formControlName="full_name" /></label>
-      <label>Cargo (badge)<input type="text" formControlName="role_title" /></label>
-      <label>Saludo (línea 1)<input type="text" formControlName="hero_greeting" /></label>
-      <label>Título (línea 2)<input type="text" formControlName="hero_role" /></label>
-      <label>Subtítulo<textarea rows="2" formControlName="hero_subtitle"></textarea></label>
+      <div class="field-grid cols-2">
+        <label class="field">
+          Nombre completo
+          <input type="text" formControlName="full_name" />
+        </label>
+        <label class="field">
+          Cargo (badge)
+          <input type="text" formControlName="role_title" />
+        </label>
+        <label class="field">
+          Saludo (línea 1)
+          <input type="text" formControlName="hero_greeting" />
+        </label>
+        <label class="field">
+          Título (línea 2)
+          <input type="text" formControlName="hero_role" />
+        </label>
+      </div>
+
+      <label class="field">
+        Subtítulo
+        <textarea rows="2" formControlName="hero_subtitle"></textarea>
+      </label>
 
       <div class="hero-customization">
-        <div class="color-field">
-          <label>Color de fondo<input type="color" formControlName="hero_bg_color" /></label>
-          <label>Color de texto<input type="color" formControlName="hero_text_color" /></label>
+        <div class="field-grid cols-2">
+          <label class="field color-field">
+            Color de fondo
+            <input type="color" formControlName="hero_bg_color" />
+          </label>
+          <label class="field color-field">
+            Color de texto
+            <input type="color" formControlName="hero_text_color" />
+          </label>
         </div>
 
-        <div class="upload-field">
-          <label>Imagen de fondo (opcional, tapa los colores de arriba)</label>
-          @if (heroBgUrl()) {
-            <img class="hero-bg-preview" [src]="heroBgUrl()" alt="Fondo del hero" />
-          }
-          <div class="hero-bg-actions">
-            <input type="file" accept="image/*" (change)="onHeroBgSelected($event)" [disabled]="uploadingHeroBg()" />
+        <label class="field">
+          Imagen de fondo (opcional, tapa los colores de arriba)
+          <div class="upload-field">
             @if (heroBgUrl()) {
-              <button type="button" class="btn btn-outline" (click)="removeHeroBg()">Quitar imagen</button>
+              <img class="hero-bg-preview" [src]="heroBgUrl()" alt="Fondo del hero" />
+            }
+            <div class="hero-bg-actions">
+              <input type="file" accept="image/*" (change)="onHeroBgSelected($event)" [disabled]="uploadingHeroBg()" />
+              @if (heroBgUrl()) {
+                <button type="button" class="btn btn-outline" (click)="removeHeroBg()">Quitar imagen</button>
+              }
+            </div>
+            @if (uploadingHeroBg()) {
+              <span class="hint">Comprimiendo y subiendo...</span>
             }
           </div>
-          @if (uploadingHeroBg()) {
-            <span class="hint">Comprimiendo y subiendo...</span>
-          }
-        </div>
+        </label>
       </div>
     </fieldset>
 
-    <fieldset>
+    <fieldset class="card">
       <legend>Sobre mí</legend>
-      <label>Descripción<textarea rows="5" formControlName="about_text"></textarea></label>
-      <label>Ubicación<input type="text" formControlName="location" /></label>
-      <label>Disponibilidad<input type="text" formControlName="availability" /></label>
-      <label>Idiomas<input type="text" formControlName="languages" /></label>
-      <label>Intereses<input type="text" formControlName="interests" /></label>
+      <label class="field">
+        Descripción
+        <textarea rows="5" formControlName="about_text"></textarea>
+      </label>
+      <div class="field-grid cols-2">
+        <label class="field">
+          Ubicación
+          <input type="text" formControlName="location" />
+        </label>
+        <label class="field">
+          Disponibilidad
+          <input type="text" formControlName="availability" />
+        </label>
+        <label class="field">
+          Idiomas
+          <input type="text" formControlName="languages" />
+        </label>
+        <label class="field">
+          Intereses
+          <input type="text" formControlName="interests" />
+        </label>
+      </div>
     </fieldset>
 
-    <fieldset>
+    <fieldset class="card">
       <legend>Contacto</legend>
-      <label>GitHub URL<input type="url" formControlName="github_url" /></label>
-      <label>LinkedIn URL<input type="url" formControlName="linkedin_url" /></label>
-      <label>Email<input type="email" formControlName="email" /></label>
+      <div class="field-grid cols-2">
+        <label class="field">
+          GitHub URL
+          <input type="url" formControlName="github_url" />
+        </label>
+        <label class="field">
+          LinkedIn URL
+          <input type="url" formControlName="linkedin_url" />
+        </label>
+        <label class="field">
+          Email
+          <input type="email" formControlName="email" />
+        </label>
+      </div>
     </fieldset>
 
-    <button type="submit" class="btn btn-primary" [disabled]="saving()">
-      @if (saving()) { Guardando... } @else { Guardar cambios }
-    </button>
-    @if (savedMessage()) {
-      <span class="hint success">Guardado ✓</span>
-    }
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary" [disabled]="saving()">
+        @if (saving()) { Guardando... } @else { Guardar cambios }
+      </button>
+      @if (savedMessage()) {
+        <span class="hint success"><i class="ph-bold ph-check-circle"></i> Guardado</span>
+      }
+    </div>
   </form>
 }

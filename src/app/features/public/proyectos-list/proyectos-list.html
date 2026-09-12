@@ -1,0 +1,93 @@
+<div class="page-header">
+  <div>
+    <h1>Proyectos</h1>
+    <p>Trabajo real: qué problema resolvía cada uno y cómo lo encaré.</p>
+  </div>
+  <span class="count-pill">
+    <i class="ph-bold ph-folder"></i>
+    {{ projects().length }} proyectos
+  </span>
+</div>
+
+<div class="controls">
+  <label class="search">
+    <i class="ph ph-magnifying-glass"></i>
+    <input type="text" placeholder="Buscar proyecto" [value]="search()" (input)="onSearch($event)" />
+  </label>
+
+  <div class="chips">
+    <button
+      type="button"
+      class="chip"
+      [class.active]="activeCategory() === null"
+      (click)="setCategory(null)"
+    >
+      Todos
+    </button>
+    @for (category of categories(); track category) {
+      <button
+        type="button"
+        class="chip"
+        [class.active]="activeCategory() === category"
+        (click)="setCategory(category)"
+      >
+        {{ category }}
+      </button>
+    }
+  </div>
+</div>
+
+@if (loading()) {
+  <div class="grid">
+    @for (i of [1, 2, 3]; track i) {
+      <div class="skel"></div>
+    }
+  </div>
+} @else if (filtered().length) {
+  <div class="grid">
+    @for (project of filtered(); track project.id) {
+      <a class="project-card" [routerLink]="['/proyectos', project.slug]">
+        @if (project.image_url) {
+          <div class="project-image">
+            <img [src]="project.image_url" [alt]="project.title" loading="lazy" />
+            <span class="category-badge">
+              <span class="dot" [style.background]="'var(' + categoryColor(project.category) + ')'"></span>
+              {{ project.category }}
+            </span>
+          </div>
+        } @else {
+          <div class="project-image placeholder" [style.background]="'color-mix(in srgb, var(' + categoryColor(project.category) + ') 14%, var(--bg-elevated))'">
+            <i class="ph ph-image"></i>
+            <span class="category-badge">
+              <span class="dot" [style.background]="'var(' + categoryColor(project.category) + ')'"></span>
+              {{ project.category }}
+            </span>
+          </div>
+        }
+
+        <div class="project-body">
+          <h3>{{ project.title }}</h3>
+          <p>{{ project.description }}</p>
+
+          @if (project.tech_tags.length) {
+            <div class="tag-row">
+              @for (tag of project.tech_tags.slice(0, 3); track tag) {
+                <span class="tag">{{ tag }}</span>
+              }
+              @if (project.tech_tags.length > 3) {
+                <span class="tag muted">+{{ project.tech_tags.length - 3 }}</span>
+              }
+            </div>
+          }
+
+          <span class="case-link">
+            Ver caso de estudio
+            <i class="ph-bold ph-arrow-right"></i>
+          </span>
+        </div>
+      </a>
+    }
+  </div>
+} @else {
+  <p class="empty">No encontré proyectos que coincidan con la búsqueda.</p>
+}

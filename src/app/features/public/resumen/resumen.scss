@@ -1,0 +1,400 @@
+.top-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.intro-card {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 12% 15%, var(--accent-soft), transparent 42%),
+    radial-gradient(circle at 85% 90%, color-mix(in srgb, var(--accent-2) 18%, transparent), transparent 40%),
+    var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.eyebrow {
+  color: var(--text-secondary);
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.intro-card h1 {
+  font-size: 40px;
+  line-height: 1.15;
+  max-width: 20ch;
+}
+
+// El título/credencial (ej. "Técnico Universitario en Programación...") es
+// el dato más importante del subtítulo, no una aclaración al pasar.
+.subtitle {
+  margin-top: var(--space-2);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-primary);
+  max-width: 54ch;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: var(--space-3);
+}
+
+.actions .btn i {
+  font-size: 15px;
+}
+
+.identity-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  justify-content: center;
+}
+
+.identity-avatar {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 8px;
+}
+
+.avatar-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.identity-name {
+  font-size: 19px;
+  color: var(--text-primary);
+}
+
+.identity-role {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.identity-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  margin-top: var(--space-2);
+}
+
+.identity-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: var(--radius-control);
+  border: 1px solid var(--border);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: border-color 150ms ease, color 150ms ease;
+}
+
+.identity-links a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+// Una sola tarjeta que contiene todo lo demás, con secciones separadas por
+// una línea fina en vez de una tarjeta por bloque (evita el look "una caja
+// por cada cosa" típico de layouts genéricos).
+.content-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-4);
+}
+
+.block + .block {
+  border-top: 1px solid var(--border);
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+}
+
+.block h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 17px;
+  margin-bottom: var(--space-3);
+
+  i {
+    color: var(--accent);
+    font-size: 17px;
+  }
+}
+
+.about-text {
+  font-size: 16px;
+  max-width: 75ch;
+  margin-bottom: var(--space-3);
+}
+
+.quick-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-2);
+}
+
+.fact {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  i {
+    color: var(--accent);
+    font-size: 18px;
+    margin-top: 2px;
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.fact-label {
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.fact-value {
+  font-size: 15px;
+  color: var(--text-primary);
+}
+
+.areas-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+}
+
+.area {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  padding: var(--space-2);
+}
+
+.area-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.area-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-control);
+  flex-shrink: 0;
+
+  i {
+    font-size: 15px;
+  }
+}
+
+.area-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.area-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  padding: 6px 10px;
+  font-size: 13px;
+  color: var(--text-secondary);
+
+  img {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.area-item.overflow {
+  color: var(--text-tertiary);
+}
+
+.featured-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.featured-image {
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--radius-control);
+}
+
+.featured-info h3 {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+
+.featured-info p {
+  font-size: 15px;
+}
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: var(--space-2);
+}
+
+.tag {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.case-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: var(--space-3);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.recent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.recent-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-radius: var(--radius-control);
+  transition: background-color 150ms ease;
+
+  img,
+  .recent-thumb-placeholder {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .recent-thumb-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-elevated);
+    color: var(--text-tertiary);
+  }
+
+  > i {
+    color: var(--text-tertiary);
+    font-size: 14px;
+  }
+}
+
+.recent-item:hover {
+  background: var(--card-hover);
+}
+
+.recent-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+
+  strong {
+    font-size: 15px;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.recent-category {
+  font-size: 12px;
+  color: var(--accent);
+}
+
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-3);
+}
+
+.skel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.skel-intro {
+  height: 220px;
+}
+
+.skel-card {
+  height: 220px;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@media (max-width: 900px) {
+  .top-row,
+  .areas-grid,
+  .skeleton-grid {
+    grid-template-columns: 1fr;
+  }
+}

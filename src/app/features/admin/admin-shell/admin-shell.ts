@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { ThemeService } from '../../../core/services/theme.service';
 
 @Component({
   selector: 'app-admin-shell',
@@ -10,6 +11,8 @@ import { AuthService } from '../../../core/services/auth.service';
   styleUrl: './admin-shell.scss',
 })
 export class AdminShell {
+  readonly themeService = inject(ThemeService);
+
   readonly navItems = [
     { path: '/admin', label: 'Dashboard', exact: true },
     { path: '/admin/profile', label: 'Perfil / Hero / Sobre mí' },

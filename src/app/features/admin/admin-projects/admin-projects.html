@@ -1,28 +1,109 @@
-<span class="section-eyebrow">Trabajo</span>
-<h1>Proyectos</h1>
+<div class="page-header">
+  <h1>Proyectos</h1>
+  <p class="hint">Ficha completa: datos básicos + caso de estudio para la página de detalle.</p>
+</div>
 
 <form class="inline-form form-grid" [formGroup]="form" (ngSubmit)="submit()">
-  <input type="text" formControlName="title" placeholder="Título" />
-  <textarea rows="2" formControlName="description" placeholder="Descripción"></textarea>
-  <input type="text" formControlName="tech_tags" placeholder="Tecnologías separadas por coma (Java, Spring Boot, PostgreSQL)" />
-  <input type="url" formControlName="github_url" placeholder="URL de GitHub" />
-  <input type="url" formControlName="demo_url" placeholder="URL de demo" />
-  <select formControlName="status">
-    @for (status of statuses; track status) {
-      <option [value]="status">{{ status }}</option>
-    }
-  </select>
-  <input type="number" formControlName="sort_order" placeholder="Orden" />
-  <label class="checkbox"><input type="checkbox" formControlName="featured" /> Destacado</label>
+  <div class="field-grid cols-2">
+    <label class="field">
+      Título
+      <input type="text" formControlName="title" placeholder="Nombre del proyecto" (input)="onTitleInput()" />
+    </label>
+    <label class="field">
+      Slug (URL)
+      <input type="text" formControlName="slug" placeholder="slug-en-la-url" (input)="onSlugInput()" />
+    </label>
+  </div>
 
-  <div class="image-field">
-    @if (imageUrl()) {
-      <img class="preview" [src]="imageUrl()" alt="Preview" />
-    }
-    <input type="file" accept="image/*" (change)="onImageSelected($event)" [disabled]="uploadingImage()" />
-    @if (uploadingImage()) {
-      <span class="hint">Comprimiendo a WebP...</span>
-    }
+  <label class="field">
+    Descripción corta
+    <textarea rows="2" formControlName="description" placeholder="Se ve en la tarjeta del listado"></textarea>
+  </label>
+
+  <div class="field-grid cols-2">
+    <label class="field">
+      Categoría
+      <input type="text" formControlName="category" placeholder="Desarrollo web, Datos y visualización..." />
+    </label>
+    <label class="field">
+      Tecnologías
+      <input type="text" formControlName="tech_tags" placeholder="Java, Spring Boot, PostgreSQL" />
+    </label>
+    <label class="field">
+      URL de GitHub
+      <input type="url" formControlName="github_url" placeholder="https://github.com/..." />
+    </label>
+    <label class="field">
+      URL de demo
+      <input type="url" formControlName="demo_url" placeholder="https://..." />
+    </label>
+    <label class="field">
+      Estado
+      <select formControlName="status">
+        @for (status of statuses; track status) {
+          <option [value]="status">{{ status }}</option>
+        }
+      </select>
+    </label>
+    <label class="field">
+      Orden
+      <input type="number" formControlName="sort_order" placeholder="0" />
+    </label>
+  </div>
+
+  <label class="checkbox"><input type="checkbox" formControlName="featured" /> Destacado en Resumen</label>
+
+  <label class="field">
+    Imagen
+    <div class="image-field">
+      @if (imageUrl()) {
+        <img class="preview" [src]="imageUrl()" alt="Preview" />
+      }
+      <input type="file" accept="image/*" (change)="onImageSelected($event)" [disabled]="uploadingImage()" />
+      @if (uploadingImage()) {
+        <span class="hint">Comprimiendo a WebP...</span>
+      }
+    </div>
+  </label>
+
+  <h2 class="form-subheading">Caso de estudio (página de detalle)</h2>
+
+  <div class="field-grid cols-2">
+    <label class="field">
+      Contexto
+      <textarea rows="2" formControlName="context" placeholder="En qué situación surgió el proyecto"></textarea>
+    </label>
+    <label class="field">
+      Objetivo
+      <textarea rows="2" formControlName="objective" placeholder="Qué buscaba lograr"></textarea>
+    </label>
+    <label class="field">
+      Mi participación
+      <textarea rows="2" formControlName="participation" placeholder="Qué hiciste puntualmente"></textarea>
+    </label>
+    <label class="field">
+      Problema
+      <textarea rows="2" formControlName="problem" placeholder="El problema a resolver"></textarea>
+    </label>
+    <label class="field">
+      Proceso
+      <textarea rows="2" formControlName="process" placeholder="Cómo lo abordaste"></textarea>
+    </label>
+    <label class="field">
+      Solución
+      <textarea rows="2" formControlName="solution" placeholder="En qué terminó"></textarea>
+    </label>
+  </div>
+
+  <div class="field-grid cols-2">
+    <label class="field">
+      Qué permite hacer (un punto por línea)
+      <textarea rows="3" formControlName="analysis_points" placeholder="Comparar utilidad y margen por país&#10;Detectar mercados con baja rotación"></textarea>
+    </label>
+    <label class="field">
+      Qué resuelve (un punto por línea)
+      <textarea rows="3" formControlName="detection_points" placeholder="Reemplaza el reporte manual semanal&#10;Centraliza métricas dispersas en planillas"></textarea>
+    </label>
   </div>
 
   <div class="form-actions">
@@ -36,24 +117,27 @@
 @if (loading()) {
   <p>Cargando...</p>
 } @else {
-  <table>
-    <thead>
-      <tr><th>Título</th><th>Estado</th><th>Destacado</th><th></th></tr>
-    </thead>
-    <tbody>
-      @for (project of projects(); track project.id) {
-        <tr>
-          <td>{{ project.title }}</td>
-          <td>{{ project.status }}</td>
-          <td>{{ project.featured ? 'Sí' : 'No' }}</td>
-          <td class="actions">
-            <button type="button" (click)="edit(project)">Editar</button>
-            <button type="button" class="danger" (click)="remove(project)">Eliminar</button>
-          </td>
-        </tr>
-      } @empty {
-        <tr><td colspan="4">Todavía no hay proyectos cargados.</td></tr>
-      }
-    </tbody>
-  </table>
+  <div class="list-card">
+    <table>
+      <thead>
+        <tr><th>Título</th><th>Categoría</th><th>Estado</th><th>Destacado</th><th></th></tr>
+      </thead>
+      <tbody>
+        @for (project of projects(); track project.id) {
+          <tr>
+            <td>{{ project.title }}</td>
+            <td>{{ project.category }}</td>
+            <td>{{ project.status }}</td>
+            <td>{{ project.featured ? 'Sí' : 'No' }}</td>
+            <td class="actions">
+              <button type="button" (click)="edit(project)"><i class="ph-bold ph-pencil-simple"></i> Editar</button>
+              <button type="button" class="danger" (click)="remove(project)"><i class="ph-bold ph-trash"></i> Eliminar</button>
+            </td>
+          </tr>
+        } @empty {
+          <tr><td colspan="5" class="empty-row">Todavía no hay proyectos cargados.</td></tr>
+        }
+      </tbody>
+    </table>
+  </div>
 }

@@ -69,6 +69,24 @@ export class PortfolioDataService {
     return data as Project[];
   }
 
+  async getProjectBySlug(slug: string): Promise<Project> {
+    const { data, error } = await this.db.from('projects').select('*').eq('slug', slug).single();
+    if (error) throw error;
+    return data as Project;
+  }
+
+  async listRelatedProjects(category: string, excludeId: string): Promise<Project[]> {
+    const { data, error } = await this.db
+      .from('projects')
+      .select('*')
+      .eq('category', category)
+      .neq('id', excludeId)
+      .order('sort_order')
+      .limit(2);
+    if (error) throw error;
+    return data as Project[];
+  }
+
   async upsertProject(project: Partial<Project>): Promise<Project> {
     const { data, error } = await this.db.from('projects').upsert(project).select().single();
     if (error) throw error;
